@@ -175,7 +175,6 @@ export class AddSaleComponent implements OnInit {
 
         this.getProductsData()
         this.getCustomerData()
-        this.getTableData()
         this.getshopDetails()
         // this.renderer.listen(document, 'keydown.shift.s', handler)
     }
@@ -217,25 +216,6 @@ export class AddSaleComponent implements OnInit {
                 this.activeIds.push("ngb-panel-" + i);
             }
             this.showProducts = true;
-            // if (data.products.last_page > 1) {
-            //     console.log('greater');
-            //     for (let i = 2; i <= data.products.last_page; i++) {
-            //         this.productService.getProducts(i).subscribe((ele: any) => {
-            //             ele.forEach((element: any) => {
-            //                 element.product_count = 0;
-            //             });
-            //             this.categoryData = this.categoryData.concat(ele.products.data);
-            //             console.log(ele.products.data);
-            //         })
-            //     }
-            //     console.log(this.categoryData, 'pro data');
-            //     this.showProducts = true;
-
-            // } else {
-            //     this.showProducts = true;
-            // }
-            // this.categoryData = data.products.data
-            // console.log(this.categoryData);
         })
     }
 
@@ -268,54 +248,6 @@ export class AddSaleComponent implements OnInit {
                 this.showloader = false
             }
         });
-    }
-
-    search(event: any) {
-        this.showloader = true
-
-        // this.filteredData = this.rowData.filter((item: templogRecord) => {
-        //     return item.sensor.toLowerCase().includes(searchValue.toLowerCase());
-        //   });
-        console.log(this.searchValue);
-
-        this.productService.searchProducts(this.searchValue).subscribe({
-            next: (res: any) => {
-                this.categoryData = res.data;
-
-                for (let i = 0; i < this.categoryData.length; i++) {
-                    this.activeIds.push("ngb-panel-" + i);
-                }
-
-                this.showloader = false
-            }, error: err => {
-                this.toast.error('Error', 'Server error.')
-                this.showloader = false
-            }
-        });
-    }
-
-    getTableData() {
-        this.TableManagementService.getTableManagementData().subscribe((data: any) => {
-            console.log('table0', data);
-            data.data.forEach((element: any) => {
-                if (element.is_table_occupied == 0 && element.is_table_active == 1) {
-                    console.log('true', element.is_table_occupied, element.is_table_active);
-
-                    this.tableList.push(element);
-                }
-            });
-            console.log(this.tableList, 'tableList');
-
-            // this.tableList = data.data;
-            if (this.default_table_number) {
-                this.addSaleForm.get('table_number')?.setValue(this.default_table_number);
-            } else {
-
-                if (this.tableList.length > 0) {
-                    this.addSaleForm.get('table_number')?.setValue(this.tableList[0].res_table_number);
-                }
-            }
-        })
     }
 
     decreaseCount(catID: any, prodId: any, count: any) {

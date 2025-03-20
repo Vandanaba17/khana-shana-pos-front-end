@@ -11,7 +11,7 @@ export const sideNavSections: SideNavSection[] = [
     },
     {
         text: 'Sales',
-        items: ['sales', 'table_management'],
+        items: ['sales'],
     },
     {
         text: 'Catalog',
@@ -20,25 +20,9 @@ export const sideNavSections: SideNavSection[] = [
     {
         text: 'System',
         items: ['users', 'vendors', 'uom', 'customer', 'settings'],
-    },
-    {
-        text: 'Reports',
-        items: ['expense_by_group', 'monthly_expense'],
-    },
+    }
 ];
 
-// Sales
-// -------
-// Sales
-// Menu Items
-// Menu Categories
-// Tables Management
-
-// Expenses
-// -----------
-// Items
-// Item Groups
-// Purchases
 export const sideNavItems: SideNavItems = {
 
     // Expenses
@@ -64,14 +48,6 @@ export const sideNavItems: SideNavItems = {
         text: 'Sales',
         link: '/sales'
     },
-
-    table_management: {
-        icon: 'table',
-        text: 'Table Management',
-        link: '/sales/table_management'
-    },
-
-
 
     // System
     users: {
@@ -100,17 +76,6 @@ export const sideNavItems: SideNavItems = {
         text: 'Settings',
         link: '/settings'
     },
-    // Reports
-    expense_by_group: {
-        icon: 'wallet',
-        text: 'Expense By Item Group',
-        link: '/reports/expense_by_group',
-    },
-    monthly_expense: {
-        icon: 'wallet',
-        text: 'Monthly Expense',
-        link: '/reports/monthly_expense',
-    },
 
 
     // Catalog
@@ -126,46 +91,12 @@ export const sideNavItems: SideNavItems = {
         link: '/catalog/categories'
     },
 
-    // attributes: {
-    //     icon: 'bars',
-    //     text: 'Attributes',
-    //     link: '/catalog/attributes'
-    // },
-    // attributeFamily: {
-    //     icon: 'bars',
-    //     text: 'Attribute Family',
-    //     link: '/catalog/attributeFamily'
-    // },
-
-
 
     dashboard: {
         icon: 'chart-area',
         text: 'Dashboard',
         link: '/dashboard',
     },
-
-
-    // sales: {
-    //     icon: 'tachometer-alt',
-    //     text: 'Sales',
-    //     link: '/sales/orders'
-    // },
-    // shipments: {
-    //     icon: '',
-    //     text: 'Shipments',
-    //     link: '/sales/shipments'
-    // },
-    // invoices: {
-    //     icon: '',
-    //     text: 'Invoices',
-    //     link: '/sales/invoices'
-    // },
-    // refunds: {
-    //     icon: '',
-    //     text: 'Refunds',
-    //     link: '/sales/refunds'
-    // },
 
     pages: {
         icon: 'book-open',
@@ -207,16 +138,4 @@ export const sideNavItems: SideNavItems = {
             },
         ],
     },
-
-    // charts: {
-    //     icon: 'chart-area',
-    //     text: 'Charts',
-    //     link: '/charts',
-    // },
-    // tables: {
-    //     icon: 'table',
-    //     text: 'Tables',
-    //     link: '/tables',
-    // },
-
 };

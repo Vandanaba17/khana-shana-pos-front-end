@@ -56,22 +56,8 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        console.log(data);
-        this.auth.login(data).subscribe({
-            next: (result: any) => {
-                localStorage.setItem('token', result.access_token)
-                localStorage.setItem('Firstname', result.user.first_name)
-                localStorage.setItem('Lastname', result.user.lastname)
-                localStorage.setItem('Email', result.user.email)
-                localStorage.setItem('ShopDetails', JSON.stringify(result.shopDetails))
-                this.router.navigate(['/sales']);
-                this.userData = result.user
-            }, error: error => {
-                console.log('error', error);
+        this.router.navigate(['/sales']);
 
-                this.toast.show('Error', 'Email id or password is incorrect', { className: 'bg-danger text-light' });
-            }
-        });
 
         // prepare parameter
         // this.auth.getUser(
