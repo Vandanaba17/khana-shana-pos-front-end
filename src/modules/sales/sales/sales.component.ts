@@ -1,4 +1,3 @@
-import { TableManagementService } from './../table-management.service';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppToastService } from '@modules/shared-module/services/app-toast.service';
@@ -37,8 +36,6 @@ export class SalesComponent implements OnInit {
         private toast: AppToastService,
         private modalService: NgbModal,
         public datepipe: DatePipe,
-        private TableManagementService: TableManagementService,
-        private userService: UserDataService,
     ) { }
 
     ngOnInit(): void {

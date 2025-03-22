@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppCommonModule } from '@common/app-common.module';
 import { SBRouteData } from '@modules/navigation/models';
-import { NavigationModule } from '@modules/navigation/navigation.module';
 
 import { AddOutletComponent } from './add-outlet/add-outlet.component';
 import { AddUomComponent } from './add-uom/add-uom.component';
@@ -138,4 +136,4 @@ const routes: Routes = [
     imports: [PosModule, RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class PosRoutingModule {}
+export class PosRoutingModule { }

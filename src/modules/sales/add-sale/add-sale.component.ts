@@ -1,4 +1,3 @@
-import { TableManagementService } from './../table-management.service';
 import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -131,7 +130,6 @@ export class AddSaleComponent implements OnInit {
         private router: Router,
         private activeRoute: ActivatedRoute,
         private renderer: Renderer2,
-        private TableManagementService: TableManagementService,
         private userService: UserDataService,
     ) { }
 
@@ -884,13 +882,6 @@ export class AddSaleComponent implements OnInit {
                     table_occupied: 1,
                     table_active: 1
                 }
-                this.TableManagementService.editTableData(this.selectedTableId, tableData).subscribe({
-                    next: data => {
-
-                    }, error: err => {
-                        this.toast.error('Error', 'Table could not be marked as occupied');
-                    }
-                })
             }, error: err => {
                 this.toast.error('Error', 'Server Error')
                 // this.router.navigate(['/auth/login'])

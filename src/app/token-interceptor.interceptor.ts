@@ -1,4 +1,3 @@
-import { UserService } from '@modules/auth/services';
 import { Injectable } from '@angular/core';
 import {
     HttpRequest,
@@ -16,7 +15,6 @@ import { Router } from '@angular/router';
 export class TokenInterceptor implements HttpInterceptor {
 
     constructor(
-        private userService: UserService,
         private router: Router
     ) { }
 
@@ -48,7 +46,6 @@ export class TokenInterceptor implements HttpInterceptor {
                     console.log(error, 'err from inter');
 
                     if (error.status === 401) {
-                        this.userService.logout();
                         localStorage.clear();
                         this.router.navigate(['/']);
                         localStorage.setItem('showLogoutWarning', 'true');

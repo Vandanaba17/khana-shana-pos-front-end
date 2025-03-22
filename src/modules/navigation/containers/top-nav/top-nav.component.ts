@@ -18,32 +18,12 @@ export class TopNavComponent implements OnInit {
     shopName: any;
     shopLogo: any;
 
-    constructor(private navigationService: NavigationService,
-        private userService: UserDataService,
-        private sanitizer: DomSanitizer,
-        private toast: AppToastService,) { }
+    constructor(
+    ) { }
+
     ngOnInit() {
-        // this.getshopDetails();
         let shopDetails: any = JSON.parse(localStorage.getItem('ShopDetails') || '{}');
         this.shopName = shopDetails?.shop_name;
         this.shopLogo = shopDetails?.logo;
-    }
-
-    // getshopDetails() {
-
-
-    //     this.userService.getshopDetails().subscribe({
-    //         next: (result: any) => {
-    //             this.shopName = result.shop_name
-    //             this.shopLogo = result.logo
-    //                 console.log(result.shop_name);
-    //             }, error: err => {
-
-    //                 this.toast.error('Error', 'Server error.')
-    //             }
-    //         })
-    // }
-    toggleSideNav() {
-        this.navigationService.toggleSideNav();
     }
 }

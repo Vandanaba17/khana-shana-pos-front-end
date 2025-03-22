@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AppCommonModule } from '@common/app-common.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -14,17 +13,16 @@ import { PurchaseOrdersComponent } from './purchase-orders/purchase-orders.compo
 
 
 @NgModule({
-  declarations: [PurchaseOrdersComponent, AddPurchaseOrderComponent, EditPurchaseOrderComponent],
-  imports: [
-    CommonModule,
-    // PurchaseOrdersRoutingModule,
-    NavigationModule,
-    AppCommonModule,
-    NgbModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    NgSelectModule
-  ]
+    declarations: [PurchaseOrdersComponent, AddPurchaseOrderComponent, EditPurchaseOrderComponent],
+    imports: [
+        CommonModule,
+        // PurchaseOrdersRoutingModule,
+        NavigationModule,
+        NgbModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        NgSelectModule
+    ]
 })
 export class PurchaseOrdersModule { }

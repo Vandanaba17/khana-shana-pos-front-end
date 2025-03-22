@@ -24,24 +24,12 @@ export class NavigationService {
                 this._currentURL$.next(router.url);
             });
     }
- 
 
-    
+
+
 
     sideNavVisible$(): Observable<boolean> {
         return this._sideNavVisible$;
-    }
-
-    toggleSideNav(visibility?: boolean) {
-        if(visibility == false){
-            this._sideNavVisible$.next(true);
-        }
-        else if (typeof visibility !== 'undefined') {
-            this._sideNavVisible$.next(visibility);
-        }        
-        else {
-            this._sideNavVisible$.next(!this._sideNavVisible$.value);
-        }
     }
 
     routeData$(): Observable<SBRouteData> {
@@ -52,5 +40,5 @@ export class NavigationService {
         return this._currentURL$;
     }
 
-   
+
 }

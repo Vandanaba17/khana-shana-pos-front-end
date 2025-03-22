@@ -12,22 +12,9 @@
         </button>
     </div>
 
-    <div class="d-flex justify-content-between mb-4 flex-flow">
-
-        <div class="input-group rounded w-full">
-            <input class="form-control amber-border" class="form-control" type="text" aria-label="Search"
-                (keyup)="search($event)" placeholder="Search" [(ngModel)]="searchValue">
-            <div class="input-group-append">
-                <button class="btn input-group-text bg-white text-dark amber lighten-3 form-control"
-                    id="basic-text1"><i class="fa fa-search" aria-hidden="true"
-                        (click)="search($event)"></i></button>
-            </div>
-        </div>
-
-    </div>   
-
     <ul class="max-w-xs flex flex-col">
-        <li  *ngFor="let data of categoryData" class="inline-flex width items-center gap-x-2 py-2 px-3 text-md font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg text- dark:bg-gray-800 dark:border-gray-700 dark:text-blue-600/100">
+        <li *ngFor="let data of categoryData"
+            class="inline-flex width items-center gap-x-2 py-2 px-3 text-md font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg text- dark:bg-gray-800 dark:border-gray-700 dark:text-blue-600/100">
             {{ data.name }} |
             <span *ngIf="data.status == 0">active</span>
             <span *ngIf="data.status == 1">inactive</span>
@@ -36,14 +23,13 @@
             <span>{{ data.number_of_products }} Items</span>
 
             <button ngbTooltip="Edit" class="btn btn-info rounded-circle shadow mr-1 btn-sm"
-                        [routerLink]="['/catalog/editcategory/'+data.id]"><i
-                            class="fa-solid fa-square-pen fa-lg"></i></button>
+                [routerLink]="['/catalog/editcategory/'+data.id]"><i class="fa-solid fa-square-pen fa-lg"></i></button>
 
-                    <button ngbTooltip="Delete" id="remove" (click)="deleteRow(data.id)"
-                        class="btn btn-danger rounded-circle shadow btn-sm"><i
-                            class="fa-solid fa-trash-can fa-lg mx-auto"></i></button>
+            <button ngbTooltip="Delete" id="remove" (click)="deleteRow(data.id)"
+                class="btn btn-danger rounded-circle shadow btn-sm"><i
+                    class="fa-solid fa-trash-can fa-lg mx-auto"></i></button>
         </li>
-      </ul>
+    </ul>
 
     <div *ngIf="showloader" class="d-flex justify-content-center pt-5">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">

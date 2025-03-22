@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-import { Data, ItemGroups } from './itemGroups';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,8 @@ export class ItemGroupsService {
     private http: HttpClient
   ) { }
 
-  getItemGroupsData(page: number, limit: number): Observable<ItemGroups> {
-    return this.http.get<ItemGroups>(this.url + '?page=' + page + '&limit=' + limit);
+  getItemGroupsData(page: number, limit: number): Observable<any> {
+    return this.http.get<any>(this.url + '?page=' + page + '&limit=' + limit);
   }
 
   postItemGroupsData(data: any) {
@@ -32,8 +31,8 @@ export class ItemGroupsService {
     return this.http.put(this.url + '/' + id, data)
   }
 
-  patchItemGroupData(id: number): Observable<Data> {
-    return this.http.get<Data>(this.url + '/' + id);
+  patchItemGroupData(id: number): Observable<any> {
+    return this.http.get<any>(this.url + '/' + id);
   }
 
   searchItemGroup(page: any, data: any) {

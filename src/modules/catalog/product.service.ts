@@ -3,48 +3,41 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-import { Data, ProductData } from './prodList';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ProductService {
 
-  private url = environment.apiUrl + 'product';
-  // private url = 'http://63b9-103-39-129-200.ngrok.io/api/product'
+    private url = environment.apiUrl + 'product';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  // For getting products data
-  getProducts(page: number): Observable<ProductData> {
-    return this.http.get<ProductData>(this.url + '?page=' + page);
-  }
+    // For getting products data
+    getProducts(page: number): Observable<any> {
+        return this.http.get<any>(this.url + '?page=' + page);
+    }
 
-  // For deleting products data
-  deleteProducts(id: number) {
-    return this.http.delete(this.url + '/'+ id)
-  }
+    // For deleting products data
+    deleteProducts(id: number) {
+        return this.http.delete(this.url + '/' + id)
+    }
 
-  // For adding products data
-  postProducts(data: any) {
-    return this.http.post(this.url, data)
-  }
+    // For adding products data
+    postProducts(data: any) {
+        return this.http.post(this.url, data)
+    }
 
-  // For editing products data
-  editProducts(id: number, data: any) {
-    return this.http.put(this.url + '/' + id, data)
-  }
+    // For editing products data
+    editProducts(id: number, data: any) {
+        return this.http.put(this.url + '/' + id, data)
+    }
 
-  // For searching products data
-  searchProducts(data: any): Observable<ProductData> {
-    return this.http.get<ProductData>(this.url + '?query=' + data)
-  }
+    editPatchData(id: any): Observable<any> {
+        return this.http.get<any>(this.url + '/' + id)
+    }
 
-  editPatchData(id: any):Observable<Data> {
-    return this.http.get<Data>(this.url + '/' + id)
-  }
-
-  getLastPosition() {
-    return this.http.get(this.url + '/last_position')
-  }
+    getLastPosition() {
+        return this.http.get(this.url + '/last_position')
+    }
 }

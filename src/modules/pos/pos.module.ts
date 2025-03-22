@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AppCommonModule } from '@common/app-common.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -23,28 +22,27 @@ import { VendorsComponent } from './vendors/vendors.component';
 
 
 @NgModule({
-  declarations: [UsersListComponent,
-    AddUserComponent,
-    OutletComponent,
-    AddOutletComponent,
-    EditUserComponent,
-    EditOutletComponent,
-    VendorsComponent,
-    AddVendorComponent,
-    EditVendorComponent,
-    UomComponent,
-    AddUomComponent,
-    EditUomComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    AppCommonModule,
-    NavigationModule,
-    RouterModule,
-    NgbModule,
-    NgSelectModule
-  ]
+    declarations: [UsersListComponent,
+        AddUserComponent,
+        OutletComponent,
+        AddOutletComponent,
+        EditUserComponent,
+        EditOutletComponent,
+        VendorsComponent,
+        AddVendorComponent,
+        EditVendorComponent,
+        UomComponent,
+        AddUomComponent,
+        EditUomComponent
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NavigationModule,
+        RouterModule,
+        NgbModule,
+        NgSelectModule
+    ]
 })
 export class PosModule { }

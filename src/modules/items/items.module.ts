@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AppCommonModule } from '@common/app-common.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemsComponent } from './items/items.component';
@@ -14,17 +13,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
-  declarations: [ItemsComponent, AddItemComponent, EditItemComponent],
-  imports: [
-    CommonModule,
-    NavigationModule,
-    AppCommonModule,
-    NgbModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    NgSelectModule
-    // ItemsRoutingModule
-  ]
+    declarations: [ItemsComponent, AddItemComponent, EditItemComponent],
+    imports: [
+        CommonModule,
+        NavigationModule,
+        NgbModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        NgSelectModule
+        // ItemsRoutingModule
+    ]
 })
 export class ItemsModule { }

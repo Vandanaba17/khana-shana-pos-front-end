@@ -2,10 +2,6 @@ import { SideNavItems, SideNavSection } from '@modules/navigation/models';
 
 export const sideNavSections: SideNavSection[] = [
     {
-        text: ' ',
-        items: ['dashboard']
-    },
-    {
         text: 'Expenses',
         items: ['item_groups', 'items', 'purchase_orders'],
     },
@@ -19,7 +15,7 @@ export const sideNavSections: SideNavSection[] = [
     },
     {
         text: 'System',
-        items: ['users', 'vendors', 'uom', 'customer', 'settings'],
+        items: ['users', 'vendors', 'uom', 'customer'],
     }
 ];
 
@@ -89,13 +85,6 @@ export const sideNavItems: SideNavItems = {
         icon: 'list-alt',
         text: 'Menu Categories',
         link: '/catalog/categories'
-    },
-
-
-    dashboard: {
-        icon: 'chart-area',
-        text: 'Dashboard',
-        link: '/dashboard',
     },
 
     pages: {

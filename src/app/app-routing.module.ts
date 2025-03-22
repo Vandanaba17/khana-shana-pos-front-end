@@ -41,57 +41,7 @@ const routes: Routes = [
         path: 'purchase_orders',
         loadChildren: () =>
             import('modules/purchase-orders/purchase-orders-routing.module').then(m => m.PurchaseOrdersRoutingModule),
-    },
-    {
-        path: 'menu',
-        loadChildren: () =>
-            import('modules/qrcode-menu/qrcode-menu-routing.module').then(m => m.QrcodeMenuRoutingModule),
-    },
-    {
-        path: 'reports',
-        loadChildren: () =>
-            import('modules/reports/reports-routing.module').then(m => m.ReportsRoutingModule),
-    },
-    {
-        path: 'dashboard',
-        loadChildren: () =>
-            import('modules/dashboard/dashboard-routing.module').then(
-                m => m.DashboardRoutingModule
-            ),
-    },
-    {
-        path: 'settings',
-        loadChildren: () =>
-            import('modules/settings/settings-routing.module').then(
-                m => m.SettingsRoutingModule
-            ),
-    },
-    {
-        path: 'auth',
-        loadChildren: () =>
-            import('modules/auth/auth-routing.module').then(m => m.AuthRoutingModule),
-    },
-    {
-        path: 'error',
-        loadChildren: () =>
-            import('modules/error/error-routing.module').then(m => m.ErrorRoutingModule),
-    },
-    // {
-    //     path: 'tables',
-    //     loadChildren: () =>
-    //         import('modules/tables/tables-routing.module').then(m => m.TablesRoutingModule),
-    // },
-    // {
-    //     path: 'version',
-    //     loadChildren: () =>
-    //         import('modules/utility/utility-routing.module').then(m => m.UtilityRoutingModule),
-    // },
-    {
-        path: '**',
-        pathMatch: 'full',
-        loadChildren: () =>
-            import('modules/error/error-routing.module').then(m => m.ErrorRoutingModule),
-    },
+    }
 ];
 
 @NgModule({
