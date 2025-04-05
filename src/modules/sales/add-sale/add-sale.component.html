@@ -4,123 +4,6 @@
         <form [formGroup]="addSaleForm">
             <div class="">
 
-                <!-- <h3 class="card-header mb-2">Select Customer</h3> -->
-                <div class="d-flex">
-                    <button [hidden]="showCustomerDetail" class="btn btn-info mb-2 btn-sm" type="button"
-                        (click)="openVerticallyCentered(content3)" autofocus>Select
-                        Customer</button>
-                    <div [hidden]="!showCustomerDetail">
-                        <div class="d-flex">
-                            <button class="btn btn-info mb-2 btn-sm" type="button"
-                                (click)="openVerticallyCentered(content3)">Select
-                                Another Customer</button>
-                            <p class="mb-0 mx-2 mt-1">or</p>
-                            <button class="btn btn-info mb-2 btn-sm" type="button" (click)="openModal(content4)">Add
-                                Customer</button>
-                        </div>
-                        <h4>Customer Details: </h4>
-                        <p>Name: {{ customerName}}</p>
-                        <p>Phone Number: {{ customerNumber}}</p>
-                    </div>
-                    <p [hidden]="showCustomerDetail" class="mb-0 mx-2 mt-1">or</p>
-                    <button [hidden]="showCustomerDetail" class="btn btn-info mb-2 btn-sm" type="button"
-                        (click)="openModal(content4)">Add
-                        Customer</button>
-                </div>
-
-                <ng-template #content3 let-modal>
-
-                    <div class="modal-header bg-primary align-items-center text-light">
-                        <h4 class="text-light modal-title">Select Customer</h4>
-                        <button type="button" class="btn-close" aria-label="Close" (click)="selectCustomerClose()">
-                            <i class="fas fa-xmark fa-xl"></i>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <form [formGroup]="customerForm">
-                            <div class="col">
-                                <div class="form-group required">
-                                    <label class="required">Select Customer</label><br />
-                                    <ng-select formControlName="customer_id" (search)="searchCustomer($event)"
-                                        placeholder="Select Customer">
-                                        <ng-option class="border" *ngFor="let item of customerData; index as i"
-                                            value="{{item.id}}">{{ i+1
-                                            }}. {{
-                                            item.first_name }} {{ item.last_name}}</ng-option>
-                                    </ng-select>
-                                    <div *ngIf="customer?.touched && customer?.invalid || showCustomerValidation">
-                                        <div *ngIf="customer?.errors?.required"
-                                            class="alert alert-danger mt-1 py-1 px-3">Customer is
-                                            required.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-info btn-sm m-0"
-                            (click)="onSelectCustomer(customerForm)">Add
-                            Customer</button>
-                    </div>
-
-                </ng-template>
-
-                <ng-template #content4 let-modal>
-
-                    <div class="modal-header bg-primary align-items-center text-light">
-                        <h4 class=" modal-title">Add Customer</h4>
-                        <button type="button" class="btn-close" aria-label="Close" (click)="addCustomerClose()">
-                            <i class="fas fa-xmark fa-xl"></i>
-                        </button>
-                    </div>
-
-                    <form [formGroup]="addCustomerForm" (ngSubmit)="onSubmitCustomer(addCustomerForm.value)">
-                        <div class="modal-body">
-                            <div class="row">
-
-                                <div class="col-6 col-sm-4">
-                                    <div class="form-group required">
-                                        <label class="required">First Name</label>
-                                        <input type="text" placeholder="First Name" formControlName="first_name"
-                                            class="form-control" autofocus />
-                                        <div *ngIf="firstname?.touched && firstname?.invalid"
-                                            class="alert alert-danger mt-1 py-1 px-3">
-                                            <div *ngIf="firstname?.errors?.required">First Name is required.</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-6 col-sm-4">
-                                    <div class="form-group">
-                                        <label class="">Last Name</label>
-                                        <input type="text" placeholder="Last Name" formControlName="last_name"
-                                            class="form-control" />
-                                    </div>
-                                </div>
-
-                                <div class="col-6 col-sm-4">
-                                    <div class="form-group ">
-                                        <label class="">Phone Number</label>
-                                        <input type="tel" placeholder="Phone Number" formControlName="phone_number"
-                                            class="form-control" (keypress)="validateNumber($event)" maxlength="10" />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary float-right btn-sm m-0">
-                                Submit
-                            </button>
-                        </div>
-                    </form>
-
-
-                </ng-template>
-
                 <div class="row">
                     <div class="col" [hidden]="showCartSummary">
                         <h5 class="p-2">Menu Items</h5>
@@ -304,9 +187,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </form>
     </div>

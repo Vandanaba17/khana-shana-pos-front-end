@@ -2,10 +2,6 @@ import { SideNavItems, SideNavSection } from '@modules/navigation/models';
 
 export const sideNavSections: SideNavSection[] = [
     {
-        text: 'Expenses',
-        items: ['item_groups', 'items', 'purchase_orders'],
-    },
-    {
         text: 'Sales',
         items: ['sales'],
     },
@@ -13,10 +9,6 @@ export const sideNavSections: SideNavSection[] = [
         text: 'Catalog',
         items: ['products', 'categories'],
     },
-    {
-        text: 'System',
-        items: ['users', 'vendors', 'uom', 'customer'],
-    }
 ];
 
 export const sideNavItems: SideNavItems = {
@@ -43,34 +35,6 @@ export const sideNavItems: SideNavItems = {
         icon: 'cash-register',
         text: 'Sales',
         link: '/sales'
-    },
-
-    // System
-    users: {
-        icon: 'user',
-        text: 'Users',
-        link: '/pos/users'
-    },
-    vendors: {
-        icon: 'users-cog',
-        text: 'Vendors',
-        link: '/pos/vendors'
-    },
-    uom: {
-        icon: 'balance-scale-left',
-        text: 'UOM',
-        link: '/pos/uom'
-    },
-
-    customer: {
-        icon: 'users',
-        text: 'Customers',
-        link: '/customer_management'
-    },
-    settings: {
-        icon: 'cog',
-        text: 'Settings',
-        link: '/settings'
     },
 
 

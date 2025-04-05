@@ -2,13 +2,11 @@ import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '@modules/catalog/product.service';
-import { CustomerManagementService } from '@modules/customer-management/customer-management.service';
 import { AppToastService } from '@modules/shared-module/services/app-toast.service';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { SalesService } from '../sales.service';
-import { UserDataService } from '@modules/pos/user-data.service';
 
 @Component({
     selector: 'sb-add-sale',
@@ -20,13 +18,11 @@ export class AddSaleComponent implements OnInit {
     @HostListener('document:keydown.shift.s')
     categoryData: any = [];
     addedProduct: any = [];
-    customerData: any = [];
     orderDetail: any = [];
     itemDetail: any = [];
     activeIds: any = [];
     addSaleForm!: FormGroup
     qtyForm!: FormGroup
-    customerForm!: FormGroup
     discountForm!: FormGroup
     selectedCity: any
     pageSize = 100
@@ -75,13 +71,7 @@ export class AddSaleComponent implements OnInit {
     page = 1
     showloader: any
     searchValue: any
-    showCustomerDetail = false;
-    customerName: any
-    customerNumber: any
-    customer_id: any
     showValidations = false;
-    showCustomerValidation = false;
-    addCustomerForm!: FormGroup;
     newDate: any;
     resultDisplayArray: any
     showDiscount: any;
@@ -91,27 +81,8 @@ export class AddSaleComponent implements OnInit {
     default_table_number: any;
     showCartSummary = false;
 
-
-
-    get customer() {
-        return this.customerForm.get('customer_id');
-    }
-
     get quantity() {
         return this.qtyForm.get('quantity');
-    }
-
-
-    get firstname() {
-        return this.addCustomerForm.get('first_name');
-    }
-
-    get lastname() {
-        return this.addCustomerForm.get('last_name');
-    }
-
-    get phone() {
-        return this.addCustomerForm.get('phone_number');
     }
 
     get getFormData(): FormArray {
@@ -124,13 +95,10 @@ export class AddSaleComponent implements OnInit {
         private productService: ProductService,
         private fb: FormBuilder,
         private modalService: NgbModal,
-        private customerService: CustomerManagementService,
         private saleService: SalesService,
         private toast: AppToastService,
         private router: Router,
         private activeRoute: ActivatedRoute,
-        private renderer: Renderer2,
-        private userService: UserDataService,
     ) { }
 
     ngOnInit(): void {
@@ -155,16 +123,6 @@ export class AddSaleComponent implements OnInit {
             quantity: this.fb.array([])
         });
 
-        this.customerForm = this.fb.group({
-            customer_id: [null, [Validators.required]]
-        })
-
-        this.addCustomerForm = this.fb.group({
-            first_name: ['', [Validators.required]],
-            last_name: [''],
-            phone_number: ['']
-        })
-
         this.activeRoute.queryParams.subscribe((params: any) => {
             if (params['table_number']) {
                 this.default_table_number = params['table_number'];
@@ -172,7 +130,6 @@ export class AddSaleComponent implements OnInit {
         });
 
         this.getProductsData()
-        this.getCustomerData()
         this.getshopDetails()
         // this.renderer.listen(document, 'keydown.shift.s', handler)
     }
@@ -215,37 +172,6 @@ export class AddSaleComponent implements OnInit {
             }
             this.showProducts = true;
         })
-    }
-
-    getCustomerData() {
-        this.saleService.getCustomerData(this.pageSize).subscribe((result: any) => {
-            this.customerData = result.data.sort(function (a: any, b: any) {
-                const nameA = a.first_name.toUpperCase(); // ignore upper and lowercase
-                const nameB = b.first_name.toUpperCase(); // ignore upper and lowercase
-                if (nameA < nameB) {
-                    return -1;
-                }
-                if (nameA > nameB) {
-                    return 1;
-                }
-
-                // names must be equal
-                return 0;
-            })
-        })
-    }
-
-    searchCustomer(event: any) {
-        console.log(event.term);
-        this.customerService.searchCustomer(event.term).subscribe({
-            next: (res: any) => {
-                this.customerData = res.customers.data
-                console.log(this.customerData);
-            }, error: err => {
-                this.toast.error('Error', 'Server error.')
-                this.showloader = false
-            }
-        });
     }
 
     decreaseCount(catID: any, prodId: any, count: any) {
@@ -295,60 +221,10 @@ export class AddSaleComponent implements OnInit {
 
     }
 
-    onSubmitCustomer(data: any) {
-
-        if (this.addCustomerForm.invalid) {
-            alert('Please fill all the required fields!');
-            return;
-        }
-
-        this.modalService.dismissAll();
-
-        this.customerService.postCustomerData(data)
-            .subscribe({
-                next: (result: any) => {
-                    console.log(result.customers)
-                    this.toast.success('Success', 'Customer Added Successfully.')
-                    this.getCustomerData();
-                    this.getCustomerDetail(result.customers);
-                }, error: err => {
-                    this.toast.error('Error', 'Server error.')
-                }
-            });
-        console.log('Form Submitted', (data));
-    }
-
-    getCustomerDetail(id: any) {
-        this.customerService.editCustomerForm(id).subscribe((data: any) => {
-            this.customerName = data.first_name + ' ' + data.last_name;
-            this.customerNumber = data.phone_number;
-            this.customer_id = id;
-            this.showCustomerDetail = true;
-        })
-    }
-
-    selectCustomerClose() {
-
-        this.customerForm = this.fb.group({
-            customer_id: [null, [Validators.required]]
-        });
-        this.modalService.dismissAll();
-    }
-
     qtyClose() {
         this.qtyForm = this.fb.group({
             quantity: ['', [Validators.required]]
         })
-    }
-
-    addCustomerClose() {
-
-        this.addCustomerForm = this.fb.group({
-            first_name: ['', [Validators.required]],
-            last_name: ['', [Validators.required]],
-            phone_number: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
-        });
-        this.modalService.dismissAll();
     }
 
     onSelectDate(date: any) {
@@ -376,65 +252,17 @@ export class AddSaleComponent implements OnInit {
 
         console.log(this.addedProduct, 'added');
 
-        // this.addedProduct.forEach((g: any) => {
-        //     if (g.id == data.id) {
-        //         g.quantity = 1;
-        //         g.subtotal = data.price
-        //         this.addedProduct.push(g)
-        //         // this.ngOnInit()
-        //     }
-        //     // console.log(this.addedProduct);
-        // });
-
-        // if (this.qtyForm.invalid) {
-        //     this.showValidations = true;
-        //     alert('Please enter quantity');
-        //     return;
-        // }
-
-        // let invalid;
-
-        // this.addedProduct.forEach((g: any) => {
-        //     if (data.product_name == g.product_name) {
-        //         invalid = true
-        //     }
-        // })
-        // if (invalid) {
-        //     this.toast.warning('Warning', data.product_name + ' is already added.')
-        //     return;
-        // }
-        // console.log('Quantity', data.qty);
-
-        // this.categoryData.forEach((g: any) => {
-        //     // g.quantity = 0;
-        //     // g.subtotal = 0;
-        //     // console.log(g)
-        //     if (g.id == data.id) {
-        //         g.quantity = 1;
-        //         g.subtotal = data.price
-        //         this.addedProduct.push(g)
-        //         // this.ngOnInit()
-        //     }
-        //     // console.log(this.addedProduct);
-        // });
-
         this.semitotal = this.addedProduct.map((a: any) => (a.subtotal)).reduce(function (a: any, b: any) {
             return a + b;
         })
 
-        // this.toast.success('Success', 'Product added successfully.');
-
         this.productQuantity[this.addedProduct.length - 1] = 1;
-        // this.qtyForm = this.fb.group({
-        //     quantity: ['', [Validators.required]]
-        // })
 
         console.log(this.productQuantity, 'quantity');
 
 
         this.total += (data.quantity * data.price);
         this.calculateTotal();
-        // console.log('Added Product', this.addedProduct);
     }
 
     qtyChange(event: any, i: any) {
@@ -521,30 +349,6 @@ export class AddSaleComponent implements OnInit {
             console.log(this.discount_amount, 'dis amount');
 
         }
-    }
-
-    onSelectCustomer(data: any) {
-        // console.log(data.value.customer_id);
-
-        if (this.customerForm.invalid) {
-            this.showCustomerValidation = true;
-            alert('Please select customer');
-            return;
-        }
-
-        this.customer_id = data.value.customer_id
-        console.log('Customer id: ', this.customer_id);
-
-        this.modalService.dismissAll();
-
-        this.customerData.forEach((g: any) => {
-
-            if (g.id == data.value.customer_id) {
-                this.customerName = g.first_name + ' ' + g.last_name
-                this.customerNumber = g.phone_number
-                this.showCustomerDetail = true
-            }
-        });
     }
 
     openVerticallyCentered(content: any) {
@@ -653,7 +457,7 @@ export class AddSaleComponent implements OnInit {
         return this.resultDisplayArray;
     }
 
-    getOrderDetail(id: number, print: any) {
+    getOrderDetail(id: number) {
         this.saleService.orderDetailData(id).subscribe((data: any) => {
             console.log(data, 'order data');
 
@@ -680,140 +484,10 @@ export class AddSaleComponent implements OnInit {
 
             this.getItems(this.itemDetail);
 
-            if (print == true) {
-                this.openInvoice();
-            }
-
         })
     }
 
-    openInvoice() {
-        if (this.orderDetail.id != undefined) {
-
-            let htmlContent = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <style>
-        .text-align {
-          margin-top: 0.5rem;
-          margin-bottom: 0.5rem;
-          text-align: center
-        }
-
-      p {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .m-0 {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-
-      .font-bold {
-        font-weight: bold;
-      }
-      .tax:before, .tax:after {
-        content: "";
-        flex: 1 1;
-        border-bottom: 1px dashed #000;
-        margin: auto;
-      }
-
-      .tax {
-        display: flex;
-        flex-direction: row;
-      }
-
-      .grid-container {
-        display: grid;
-        grid-template-columns: auto auto;
-      }
-
-      body {
-        font-size: 10px;
-        font-family: Consolas,monaco,monospace;
-      }
-}
-
-  </style>
-    <body>
-      <p class="text-align"><img src="${this.shopDetails.logo}" alt="" width="25" /></p>
-      <h3 class="text-align">${this.shopDetails.shop_name}</h3>
-      <p class="text-align m-0">High quality meals</p>
-      <p class="text-align m-0">(Takeaway, Delievery, Dining)</p>
-      <p class="text-align">FF-122, Infocity Supermall 2, Infocity Gandhinagar-382007 </p>
-      <p class="tax text-align">Order Summary</p>
-
-        <p class="m-0">Date: <span class="font-bold">${this.newDate}</span></p>
-        <p class="m-0">Order No.: <span class="font-bold">${this.orderDetail.id}</span></p>
-        <p class="m-0">Payment mode: <span class="font-bold">${this.orderDetail.payment_mode}</span></p>
-        <p class="m-0">Customer Name: : <span class="font-bold">${this.customerName ? this.customerName : '-'}</span></p>
-        <p class="m-0">Table Number: <span class="font-bold">${this.table_number ? this.table_number : '-'}</span></p>
-
-      <span class="tax" style="margin-top: 0.5rem; margin-bottom: 0.5rem;"></span>
-      <table style="width:100%;">
-        <thead>
-          <th style="text-align:start">Item name</th>
-          <th>Rate</th>
-          <th>Amount</th>
-        </thead>
-        <tbody style="width:100%;text-align:center">
-          ${this.getItems(this.itemDetail)}
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="1"><span class="tax"></span></td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: end;">Subtotal: </td>
-            <td>₹${Math.round(this.orderDetail.total_amount?.toFixed(2) - this.orderDetail.shipping_charge?.toFixed(2) + Number(this.orderDetail.discount_amount?.toFixed(2))).toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: end;">Discount amt: </td>
-            <td>₹${this.discount_store?.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: end;">Packaging charges: </td>
-            <td>₹${this.orderDetail.shipping_charge?.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td colspan="3"><span class="tax"></span></td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: end;">Total: </td>
-            <td>₹${this.orderDetail.total_amount?.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td colspan="3"><span class="tax"></span></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p class="text-align">FSSAI No. 20722009000398</p>
-      <p class="text-align m-0">Mo.: 6351637510</p>
-      <p class="text-align m-0">Email: myjamanvaar@gmail.com</p>
-      <p class="text-align">Thank you! Please visit again.</p>
-      <p class="text-align" style="font-size: 25px; color: black; filter: grayscale(1);">&#128578;</p>
-    </body>
-  </html>
-  `;
-            let invoice = window.open("", "MsgWindow", "");
-            invoice?.document.write(htmlContent);
-            setTimeout(() => {
-                invoice?.print();
-                invoice?.focus();
-                invoice?.close();
-            });
-
-        }
-    }
-
     onSubmit(data: any) {
-
-        // if (this.customerForm.invalid) {
-        //   alert('Please select customer!');
-        //   return;
-        // }
 
         if (this.addSaleForm.invalid) {
             alert('Please fill all the required fields!');
@@ -837,8 +511,6 @@ export class AddSaleComponent implements OnInit {
                 quantity: g.quantity,
                 subtotal: g.subtotal
             })
-            // console.log(g);
-
         });
         console.log('addedProductSubmit: ', addedProductSubmit);
 
@@ -853,7 +525,6 @@ export class AddSaleComponent implements OnInit {
             order_date: this.date,
             products: addedProductSubmit,
             payment_mode: data.payment_mode,
-            customer_id: this.customer_id,
             notes: data.notes,
             table_number: data.table_number,
             discount_amount: this.discount_amount,
@@ -866,25 +537,10 @@ export class AddSaleComponent implements OnInit {
             next: (result: any) => {
                 console.log(result, 'result data')
                 this.toast.success('Success', 'Sales Order Added Successfully.');
-                this.getOrderDetail(result.order.id, true);
+                this.getOrderDetail(result.order.id);
                 this.router.navigate(['/sales']);
-
-                let table_name;
-                if (this.customerName) {
-                    table_name = this.customerName
-                } else {
-                    table_name = '-';
-                }
-
-                let tableData = {
-                    table_number: data.table_number,
-                    table_name: table_name,
-                    table_occupied: 1,
-                    table_active: 1
-                }
             }, error: err => {
                 this.toast.error('Error', 'Server Error')
-                // this.router.navigate(['/auth/login'])
             }
         });
     }

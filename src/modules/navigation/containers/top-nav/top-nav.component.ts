@@ -1,8 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NavigationService } from '@modules/navigation/services';
-import { DomSanitizer } from '@angular/platform-browser';
-import { AppToastService } from '@modules/shared-module/services/app-toast.service';
-import { UserDataService } from '@modules/pos/user-data.service';
 @Component({
     selector: 'sb-top-nav',
     changeDetection: ChangeDetectionStrategy.OnPush,
